@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>成語 × 量/價/亂/時 四維空間定位</title>
+<style>
+:root {
+  --bg: #f3f6fa;
+  --card: #ffffff;
+  --soft: #f1f5f9;
+  --ink: #0f172a;
+  --mute: #475569;
+  --line: #cbd5e1;
+  --ground: #e2e8f0;
+  --acc: #2563eb;
+  --c-core: #d97706;
+  --c-time: #9333ea;
+  --c-chaos: #dc2626;
+  --c-val: #2563eb;
+  --c-vol: #059669;
+}
+:root[data-theme="dark"] {
+  --bg: #0b0f17;
+  --card: #151b26;
+  --soft: #1e2636;
+  --ink: #f0f6fc;
+  --mute: #94a3b8;
+  --line: #2a3241;
+  --ground: #18202c;
+  --acc: #60a5fa;
+  --c-core: #f59e0b;
+  --c-time: #a855f7;
+  --c-chaos: #ef4444;
+  --c-val: #3b82f6;
+  --c-vol: #10b981;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 14.5px/1.6 system-ui, -apple-system, "Segoe UI", "Noto Sans TC", sans-serif;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--line);
+  background: var(--card);
+  flex-wrap: wrap;
+}
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.back-parent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13px;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.back-parent:hover {
+  border-color: var(--acc);
+  color: var(--acc);
+}
+h1 {
+  font-size: 16.5px;
+  margin: 0;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pill {
+  font-size: 11.5px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  color: var(--acc);
+  font-weight: 700;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+button, select {
+  font: inherit;
+  color: inherit;
+}
+.btn {
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:hover { border-color: var(--acc); }
+.btn-primary {
+  background: var(--c-core);
+  color: #0b0f17;
+  border-color: var(--c-core);
+}
+.btn-primary:hover { filter: brightness(1.08); }
+.select-filter {
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  padding: 16px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+@media (max-width: 960px) {
+  main { grid-template-columns: 1fr; }
+}
+.stage-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.stage {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.stage svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.idiom-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  flex-wrap: wrap;
+}
+.idiom-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.idiom-word {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+.idiom-word mark {
+  background: color-mix(in srgb, var(--c-core) 25%, transparent);
+  color: var(--c-core);
+  padding: 0 4px;
+  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--c-core) 50%, transparent);
+}
+.lbl {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: rgba(11, 15, 23, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 8px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: clamp(12px, 1.4vw, 14.5px);
+  font-weight: 700;
+  color: #f8fafc;
+  white-space: nowrap;
+  transition: all 0.22s ease;
+  backdrop-filter: blur(4px);
+}
+.lbl:hover {
+  background: rgba(11, 15, 23, 0.95);
+  border-color: var(--acc);
+}
+.lbl.core-lbl {
+  font-size: clamp(14px, 1.7vw, 18px);
+  background: rgba(245, 158, 11, 0.24);
+  border: 1.5px solid var(--c-core);
+  color: #ffffff;
+  padding: 6px 16px;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--c-core) 30%, transparent);
+}
+/* 觸發狀態專屬主題高亮 */
+.lbl.btn-active-time {
+  border-color: var(--c-time);
+  background: color-mix(in srgb, var(--c-time) 22%, rgba(11, 15, 23, 0.88));
+  color: #ffffff;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--c-time) 45%, transparent);
+}
+.lbl.btn-active-chaos {
+  border-color: var(--c-chaos);
+  background: color-mix(in srgb, var(--c-chaos) 22%, rgba(11, 15, 23, 0.88));
+  color: #ffffff;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--c-chaos) 45%, transparent);
+}
+.lbl.btn-active-val {
+  border-color: var(--c-val);
+  background: color-mix(in srgb, var(--c-val) 22%, rgba(11, 15, 23, 0.88));
+  color: #ffffff;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--c-val) 45%, transparent);
+}
+.lbl.btn-active-vol {
+  border-color: var(--c-vol);
+  background: color-mix(in srgb, var(--c-vol) 22%, rgba(11, 15, 23, 0.88));
+  color: #ffffff;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--c-vol) 45%, transparent);
+}
+/* 未觸發 UI 灰階狀態 */
+.lbl.lbl-untriggered {
+  filter: grayscale(100%);
+  opacity: 0.38;
+  background: rgba(15, 23, 42, 0.55);
+  border-color: rgba(148, 163, 184, 0.22);
+  color: #64748b;
+  box-shadow: none;
+}
+.lbl.lbl-untriggered .tag {
+  opacity: 0.45;
+  filter: grayscale(100%);
+}
+.lbl.lbl-untriggered:hover {
+  filter: grayscale(25%);
+  opacity: 0.85;
+  border-color: rgba(148, 163, 184, 0.5);
+  color: #cbd5e1;
+}
+:root[data-theme="light"] .lbl {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(203, 213, 225, 0.9);
+  color: #1e293b;
+}
+:root[data-theme="light"] .lbl.lbl-untriggered {
+  background: rgba(241, 245, 249, 0.75);
+  border-color: rgba(226, 232, 240, 0.9);
+  color: #94a3b8;
+  filter: grayscale(100%);
+  opacity: 0.45;
+}
+:root[data-theme="light"] .lbl.btn-active-time {
+  background: color-mix(in srgb, var(--c-time) 14%, #ffffff);
+  border-color: var(--c-time);
+  color: #581c87;
+}
+:root[data-theme="light"] .lbl.btn-active-chaos {
+  background: color-mix(in srgb, var(--c-chaos) 14%, #ffffff);
+  border-color: var(--c-chaos);
+  color: #991b1b;
+}
+:root[data-theme="light"] .lbl.btn-active-val {
+  background: color-mix(in srgb, var(--c-val) 14%, #ffffff);
+  border-color: var(--c-val);
+  color: #1e40af;
+}
+:root[data-theme="light"] .lbl.btn-active-vol {
+  background: color-mix(in srgb, var(--c-vol) 14%, #ffffff);
+  border-color: var(--c-vol);
+  color: #065f46;
+}
+.lbl .tag {
+  opacity: 0.92;
+  margin-right: 4px;
+}
+aside {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-self: start;
+}
+.panel-head h2 {
+  font-size: 18px;
+  margin: 0 0 4px;
+}
+.quadrant-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  color: var(--acc);
+}
+.desc-text {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+.kv-grid {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 8px 10px;
+  font-size: 13px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin: 0;
+}
+.kv-grid dt {
+  color: var(--mute);
+  font-weight: 600;
+}
+.kv-grid dd {
+  margin: 0;
+  font-weight: 600;
+}
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.idiom-chip {
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+.idiom-chip:hover, .idiom-chip.active {
+  border-color: var(--c-core);
+  color: var(--c-core);
+  font-weight: 700;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  padding: 10px 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 12.5px;
+  color: var(--mute);
+}
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.legend i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+/* SVG 樣式 */
+.ground { fill: var(--ground); stroke: var(--bg); stroke-width: 1.5; }
+.tile { transition: opacity 0.25s ease-out, filter 0.25s ease-out; cursor: pointer; }
+.tile.dim, .tile.untriggered {
+  opacity: 0.32;
+  filter: grayscale(100%);
+}
+.tile.untriggered:hover {
+  opacity: 0.65;
+  filter: grayscale(35%);
+}
+.t-core { color: var(--c-core); }
+.t-time { color: var(--c-time); }
+.t-chaos { color: var(--c-chaos); }
+.t-val { color: var(--c-val); }
+.t-vol { color: var(--c-vol); }
+.top { fill: currentColor; stroke: var(--bg); stroke-width: 1.5; }
+.sl { fill: color-mix(in srgb, currentColor 68%, #000); }
+.sr { fill: color-mix(in srgb, currentColor 48%, #000); }
+.shadow { fill: #000; opacity: 0.18; }
+.link {
+  fill: none;
+  stroke-width: 3.8;
+  stroke-linecap: round;
+  opacity: 0.95;
+}
+.link.e-time { stroke: var(--c-time); stroke-dasharray: 2 7; stroke-width: 4; }
+.link.e-chaos { stroke: var(--c-chaos); stroke-dasharray: 14 5 3 5; stroke-width: 4; }
+.link.e-val { stroke: var(--c-val); stroke-dasharray: 9 5; stroke-width: 4; }
+.link.e-vol { stroke: var(--c-vol); stroke-width: 4.5; }
+.ltxt {
+  font-size: 13px;
+  font-weight: 700;
+  fill: var(--ink);
+  paint-order: stroke;
+  stroke: var(--card);
+  stroke-width: 4.5px;
+  pointer-events: none;
+}
+.pulse {
+  fill: #ffffff;
+  stroke: var(--c-core);
+  stroke-width: 2.5;
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand-row">
+    <a href="00_Executive_Portal.html" target="_top" class="back-parent" title="返回父層：n8n 工作流模擬總頁">
+      <span>←</span>
+      <span>回到父層總頁</span>
+    </a>
+    <h1>成語 × 量/價/亂/時 四維空間定位</h1>
+    <span class="pill">R2 等距鄰域拓撲</span>
+  </div>
+  <div class="toolbar">
+    <select id="quadFilter" class="select-filter" aria-label="篩選成語象限">
+      <option value="all">全部象限 (16 組代表成語)</option>
+      <option value="cross">跨維度正交組合 C(4,2)</option>
+      <option value="self">同維度自交對比 (4 象限)</option>
+      <option value="single">單維度直觀指標 (4 維度)</option>
+    </select>
+    <button type="button" class="btn btn-primary" id="randomBtn">🎲 隨機抽成語 (Space)</button>
+    <button type="button" class="btn" id="quizBtn" aria-pressed="false">🎯 猜題模式：關</button>
+    <button type="button" class="btn" id="themeBtn">切換亮／暗</button>
+  </div>
+</header>
+
+<main>
+  <section class="stage-col">
+    <div class="idiom-banner">
+      <div class="idiom-display">
+        <span style="font-size:12.5px;color:var(--mute);font-weight:700;">當前成語：</span>
+        <div class="idiom-word" id="idiomTitle">載入中...</div>
+      </div>
+      <div id="quizHint" style="font-size:13px;color:var(--c-core);font-weight:700;display:none;">
+        請在下方棋盤點選此成語關聯的「價 / 量 / 亂 / 時」地磚！
+      </div>
+    </div>
+
+    <div class="stage" id="stage" aria-label="量價亂時等距地景：中央為隨機成語，四邊為時、亂、價、量四個維度">
+      <svg id="svg" viewBox="0 0 960 540" role="img" aria-label="成語與量價亂時四維屬性動態連線圖"></svg>
+    </div>
+
+    <div class="legend">
+      <span><i style="background:var(--c-core)"></i>◆ 中央成語核心</span>
+      <span><i style="background:var(--c-time)"></i>⏱ 時（急 / 緩・點線）</span>
+      <span><i style="background:var(--c-chaos)"></i>⚡ 亂（亂 / 清・點劃線）</span>
+      <span><i style="background:var(--c-val)"></i>⚖ 價（重 / 輕・虛線）</span>
+      <span><i style="background:var(--c-vol)"></i>📦 量（多 / 少・粗實線）</span>
+    </div>
+  </section>
+
+  <aside id="panel" aria-live="polite"></aside>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var NS = 'http://www.w3.org/2000/svg';
+  var TW = 92, TH = 46, OX = 480, OY = 40, GRID = 11;
+
+  /* 擴大為 11x11 等距網格，四維度大幅拉開至十字星軸外沿 (距離拉開 +47% 以上，橫向跨度達 460px) */
+  var NODES = [
+    { id: 'core', type: 'core', tag: '◆', label: '成語核心', x: 5, y: 5 },
+    { id: 'time', type: 'time', tag: '⏱', label: '時 (急/緩)', x: 0, y: 5 },
+    { id: 'chaos', type: 'chaos', tag: '⚡', label: '亂 (亂/清)', x: 5, y: 0 },
+    { id: 'val', type: 'val', tag: '⚖', label: '價 (重/輕)', x: 5, y: 10 },
+    { id: 'vol', type: 'vol', tag: '📦', label: '量 (多/少)', x: 10, y: 5 }
+  ];
+
+  /* 成語 × 四維屬性題庫（純粹聚焦於成語與價/量/亂/時四個維度的關聯） */
+  var IDIOMS = [
+    {
+      id: 'i01', raw: '急病亂投醫', html: '<mark>[急]</mark>病<mark>[亂]</mark>投醫',
+      group: 'cross', quadrant: '跨維度正交：【時 + 亂】',
+      dims: [
+        { to: 'time', root: '急 → 時間緊迫', mode: 'single' },
+        { to: 'chaos', root: '亂 → 盲目失序', mode: 'single' }
+      ],
+      roots: '「急」對應【時】（急迫窗口）；「亂」對應【亂】（資訊與行動失序）',
+      meaning: '越急越亂：時間壓力緊迫時，判斷與操作隨之混亂。'
+    },
+    {
+      id: 'i02', raw: '貴人多忘事', html: '<mark>[貴]</mark>人<mark>[多]</mark>忘事',
+      group: 'cross', quadrant: '跨維度正交：【價 + 量】',
+      dims: [
+        { to: 'val', root: '貴 → 價值權重高', mode: 'single' },
+        { to: 'vol', root: '多 → 數量繁多', mode: 'single' }
+      ],
+      roots: '「貴」對應【價】（重/貴）；「多」對應【量】（多/少）',
+      meaning: '同時牽涉高價值權重（貴）與高數量規模（多），事多則易遺漏。'
+    },
+    {
+      id: 'i03', raw: '人多手亂', html: '人<mark>[多]</mark>手<mark>[亂]</mark>',
+      group: 'cross', quadrant: '跨維度正交：【量 + 亂】',
+      dims: [
+        { to: 'vol', root: '多 → 數量龐大', mode: 'single' },
+        { to: 'chaos', root: '亂 → 秩序混亂', mode: 'single' }
+      ],
+      roots: '「多」對應【量】（參與者眾）；「亂」對應【亂】（缺乏協調而混亂）',
+      meaning: '數量一多，若無清楚規則，資訊與動作就會跟著變亂。'
+    },
+    {
+      id: 'i04', raw: '多事之秋', html: '<mark>[多]</mark>事之<mark>[秋]</mark>',
+      group: 'cross', quadrant: '跨維度正交：【量 + 時】',
+      dims: [
+        { to: 'vol', root: '多 → 事件量大', mode: 'single' },
+        { to: 'time', root: '秋 → 特定時節', mode: 'single' }
+      ],
+      roots: '「多」對應【量】（事端繁多）；「秋」對應【時】（關鍵時間窗口）',
+      meaning: '大量事件集中在同一個敏感時間窗口爆發。'
+    },
+    {
+      id: 'i05', raw: '一刻千金', html: '一<mark>[刻]</mark><mark>[千金]</mark>',
+      group: 'cross', quadrant: '跨維度正交：【時 + 價】',
+      dims: [
+        { to: 'time', root: '刻 → 極短時間', mode: 'single' },
+        { to: 'val', root: '千金 → 代價高昂', mode: 'single' }
+      ],
+      roots: '「刻」對應【時】（極短時間窗口）；「千金」對應【價】（極高價值與代價）',
+      meaning: '極短的時間窗口內承載極高的價值。'
+    },
+    {
+      id: 'i06', raw: '魚目混珠', html: '魚目<mark>[混]</mark><mark>[珠]</mark>',
+      group: 'cross', quadrant: '跨維度正交：【亂 + 價】',
+      dims: [
+        { to: 'chaos', root: '混 → 真假混雜', mode: 'single' },
+        { to: 'val', root: '珠 → 高價珍寶', mode: 'single' }
+      ],
+      roots: '「混」對應【亂】（混淆不清）；「珠」對應【價】（高價值標的）',
+      meaning: '低價值雜質（魚目）與高價值核心（珠）混雜在一起，真假難辨。'
+    },
+    {
+      id: 'i07', raw: '眾口鑠金', html: '<mark>[眾]</mark>口鑠<mark>[金]</mark>',
+      group: 'cross', quadrant: '跨維度正交：【量 + 價】',
+      dims: [
+        { to: 'vol', root: '眾 → 數量極多', mode: 'single' },
+        { to: 'val', root: '金 → 高價核心', mode: 'single' }
+      ],
+      roots: '「眾」對應【量】（海量規模）；「金」對應【價】（高價值與高權重）',
+      meaning: '龐大的數量累積到極限，足以熔毀高價值的核心。'
+    },
+    {
+      id: 'i08', raw: '快刀斬亂麻', html: '<mark>[快]</mark>刀斬<mark>[亂]</mark>麻',
+      group: 'cross', quadrant: '跨維度正交：【時 + 亂】',
+      dims: [
+        { to: 'time', root: '快 → 迅速果斷', mode: 'single' },
+        { to: 'chaos', root: '亂 → 糾纏如麻', mode: 'single' }
+      ],
+      roots: '「快」對應【時】（極速處置）；「亂」對應【亂】（高度糾纏的混亂狀態）',
+      meaning: '面對糾纏不清的混亂局面，以極快的速度果斷切斷。'
+    },
+    {
+      id: 'i09', raw: '緩不濟急', html: '<mark>[緩]</mark>不濟<mark>[急]</mark>',
+      group: 'self', quadrant: '同維度自交：【時 + 時】',
+      dims: [
+        { to: 'time', root: '緩 vs 急（時序落差）', mode: 'double' }
+      ],
+      roots: '「緩」與「急」皆屬【時】維度的兩極對比',
+      meaning: '緩慢的節奏應付不了緊急的時效需求。'
+    },
+    {
+      id: 'i10', raw: '千篇一律', html: '<mark>[千]</mark>篇<mark>[一]</mark>律',
+      group: 'self', quadrant: '同維度自交：【量 + 量】',
+      dims: [
+        { to: 'vol', root: '千 vs 一（規模對比）', mode: 'double' }
+      ],
+      roots: '「千」與「一」皆屬【量】維度（海量規模 vs 單一重複）',
+      meaning: '數量極多（千），但內容型態卻完全相同（一）。'
+    },
+    {
+      id: 'i11', raw: '輕重倒置', html: '<mark>[輕][重]</mark>倒<mark>[置]</mark>',
+      group: 'self', quadrant: '同維度自交：【價 + 價】（兼涉亂）',
+      dims: [
+        { to: 'val', root: '輕 vs 重（權重兩極）', mode: 'double' },
+        { to: 'chaos', root: '倒置 → 次序錯亂', mode: 'single' }
+      ],
+      roots: '「輕、重」屬【價】（代價與權重兩極）；「倒置」屬【亂】（次序顛倒）',
+      meaning: '把代價重與代價輕的優先順序完全放反了。'
+    },
+    {
+      id: 'i12', raw: '錯綜複雜', html: '<mark>[錯]</mark>綜複<mark>[雜]</mark>',
+      group: 'self', quadrant: '同維度自交：【亂 + 亂】',
+      dims: [
+        { to: 'chaos', root: '錯 vs 雜（雙重高熵）', mode: 'double' }
+      ],
+      roots: '「錯」與「雜」皆屬【亂】維度（交錯糾結、繁雜無序）',
+      meaning: '多條線索交錯纏繞，狀態極度繁雜高熵。'
+    },
+    {
+      id: 'i13', raw: '輕重緩急', html: '<mark>[輕重]</mark><mark>[緩急]</mark>',
+      group: 'cross', quadrant: '雙軸總口訣：【價 + 時】',
+      dims: [
+        { to: 'val', root: '輕重 → 價之重輕', mode: 'double' },
+        { to: 'time', root: '緩急 → 時之急緩', mode: 'double' }
+      ],
+      roots: '「輕重」對應【價】（重/輕）；「緩急」對應【時】（急/緩）',
+      meaning: '四個字直接涵蓋「價」與「時」兩個維度的二元兩極。'
+    },
+    {
+      id: 'i14', raw: '撥亂反正', html: '撥<mark>[亂]</mark>反<mark>[正]</mark>',
+      group: 'single', quadrant: '單維度指標：【亂 (亂 → 清)】',
+      dims: [
+        { to: 'chaos', root: '亂 → 除亂歸清', mode: 'single' }
+      ],
+      roots: '「亂」對應【亂】維度（由混亂高熵轉為清楚低熵）',
+      meaning: '消除混亂失序的狀態，使規則與秩序回歸清楚明確。'
+    },
+    {
+      id: 'i15', raw: '燃眉之急', html: '燃眉之<mark>[急]</mark>',
+      group: 'single', quadrant: '單維度指標：【時 (急)】',
+      dims: [
+        { to: 'time', root: '急 → 迫在眉睫', mode: 'single' }
+      ],
+      roots: '「急」對應【時】維度（時間窗口極端緊迫）',
+      meaning: '火燒眉毛般迫切，時間窗口極短、刻不容緩。'
+    },
+    {
+      id: 'i16', raw: '價值連城', html: '<mark>[價值]</mark>連城',
+      group: 'single', quadrant: '單維度指標：【價 (重)】',
+      dims: [
+        { to: 'val', root: '價 → 代價極重', mode: 'single' }
+      ],
+      roots: '「價、值」對應【價】維度（權重極高、不可承受損失）',
+      meaning: '標的價值極高，一旦出錯或損毀的代價極重。'
+    }
+  ];
+
+  var svg = document.getElementById('svg');
+  var stage = document.getElementById('stage');
+  var panel = document.getElementById('panel');
+  var idiomTitle = document.getElementById('idiomTitle');
+  var quadFilter = document.getElementById('quadFilter');
+  var quizBtn = document.getElementById('quizBtn');
+  var quizHint = document.getElementById('quizHint');
+
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function topOf(x, y) { return { x: OX + (x - y) * TW / 2, y: OY + (x + y) * TH / 2 }; }
+  function pts(a) { return a.map(function(p){ return p[0] + ',' + p[1]; }).join(' '); }
+  function diamond(t, h) {
+    return [[t.x, t.y - h], [t.x + TW / 2, t.y + TH / 2 - h], [t.x, t.y + TH - h], [t.x - TW / 2, t.y + TH / 2 - h]];
+  }
+  function buildLUT(pathEl, n) {
+    n = n || 64;
+    var len = pathEl.getTotalLength(), a = [];
+    for (var i = 0; i <= n; i++) {
+      var p = pathEl.getPointAtLength(len * i / n);
+      a.push({ x: p.x, y: p.y });
+    }
+    return a;
+  }
+  function sampleLUT(lut, t) {
+    var f = Math.min(Math.max(t, 0), 1) * (lut.length - 1), i = Math.floor(f);
+    if (i >= lut.length - 1) return lut[lut.length - 1];
+    var k = f - i;
+    return { x: lut[i].x + (lut[i + 1].x - lut[i].x) * k, y: lut[i].y + (lut[i + 1].y - lut[i].y) * k };
+  }
+
+  /* 繪製 7x7 等距基底網格與 5 座立體地磚（中央成語 + 四維度） */
+  var gGround = el('g', {}, svg);
+  var gTiles = el('g', {}, svg);
+  var gLinks = el('g', {}, svg);
+  var gPulse = el('g', {}, svg);
+
+  for (var gx = 0; gx < GRID; gx++) {
+    for (var gy = 0; gy < GRID; gy++) {
+      el('polygon', { 'class': 'ground', points: pts(diamond(topOf(gx, gy), 0)) }, gGround);
+    }
+  }
+
+  var byId = {}, nodeG = {}, center = {}, btns = {};
+  NODES.forEach(function(n) { byId[n.id] = n; });
+  var order = NODES.slice().sort(function(a, b) { return (a.x + a.y) - (b.x + b.y); });
+
+  order.forEach(function(n) {
+    var h = n.type === 'core' ? 28 : 16;
+    var t = topOf(n.x, n.y), d = diamond(t, h);
+    var g = el('g', { 'class': 'tile t-' + n.type, 'data-id': n.id }, gTiles);
+    el('polygon', { 'class': 'shadow', points: pts(diamond({ x: t.x + 10, y: t.y + 6 }, 0)) }, g);
+    el('polygon', { 'class': 'sl', points: pts([d[3], d[2], [d[2][0], d[2][1] + h], [d[3][0], d[3][1] + h]]) }, g);
+    el('polygon', { 'class': 'sr', points: pts([d[2], d[1], [d[1][0], d[1][1] + h], [d[2][0], d[2][1] + h]]) }, g);
+    el('polygon', { 'class': 'top', points: pts(d) }, g);
+    g.addEventListener('click', function() { onTileClick(n.id); });
+    nodeG[n.id] = g;
+    center[n.id] = { x: t.x, y: t.y + TH / 2 - h };
+  });
+
+  /* 建立 DOM 浮動標籤按鈕 */
+  var W = 960, H = 540;
+  NODES.forEach(function(n) {
+    var c = center[n.id];
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'lbl' + (n.id === 'core' ? ' core-lbl' : '');
+    b.style.left = (c.x / W * 100) + '%';
+    b.style.top = (c.y / H * 100) + '%';
+    var tg = document.createElement('span');
+    tg.className = 'tag';
+    tg.textContent = n.tag;
+    var txtSpan = document.createElement('span');
+    txtSpan.className = 'lbl-txt';
+    txtSpan.textContent = n.label;
+    b.appendChild(tg);
+    b.appendChild(txtSpan);
+    b.addEventListener('click', function() { onTileClick(n.id); });
+    stage.appendChild(b);
+    btns[n.id] = b;
+  });
+
+  var currentIdiom = IDIOMS[0];
+  var quizMode = false;
+  var guessedDims = {};
+  var rafId = 0;
+
+  function drawCurve(fromId, toId, linkClass, labelText, curveOffset) {
+    var a = center[fromId], b = center[toId];
+    var dx = b.x - a.x, dy = b.y - a.y, len = Math.sqrt(dx * dx + dy * dy) || 1;
+    var offset = (curveOffset !== undefined) ? curveOffset : 0.14;
+    var cx = (a.x + b.x) / 2 - dy / len * len * offset;
+    var cy = (a.y + b.y) / 2 + dx / len * len * offset;
+    var p = el('path', { 'class': 'link ' + linkClass, d: 'M' + a.x + ',' + a.y + ' Q' + cx + ',' + cy + ' ' + b.x + ',' + b.y }, gLinks);
+    var lut = buildLUT(p, 64);
+    var mid = sampleLUT(lut, 0.52);
+    if (labelText) {
+      var txt = el('text', { 'class': 'ltxt', x: mid.x, y: mid.y - 7, 'text-anchor': 'middle' }, gLinks);
+      txt.textContent = labelText;
+    }
+    return lut;
+  }
+
+  function renderScene() {
+    cancelAnimationFrame(rafId);
+    while (gLinks.firstChild) gLinks.removeChild(gLinks.firstChild);
+    while (gPulse.firstChild) gPulse.removeChild(gPulse.firstChild);
+
+    idiomTitle.innerHTML = currentIdiom.html + ' <span style="font-size:13px;color:var(--mute);font-weight:600;">(' + currentIdiom.quadrant + ')</span>';
+    btns['core'].querySelector('.lbl-txt').textContent = currentIdiom.raw;
+
+    var activeNodeIds = { core: true };
+    var activeLuts = [];
+
+    currentIdiom.dims.forEach(function(d) {
+      var isRevealed = !quizMode || guessedDims[d.to];
+      if (isRevealed) {
+        activeNodeIds[d.to] = true;
+        if (d.mode === 'double') {
+          activeLuts.push(drawCurve('core', d.to, 'e-' + d.to, d.root, 0.18));
+          activeLuts.push(drawCurve('core', d.to, 'e-' + d.to, '', -0.14));
+        } else {
+          activeLuts.push(drawCurve('core', d.to, 'e-' + d.to, d.root, 0.14));
+        }
+      }
+    });
+
+    Object.keys(nodeG).forEach(function(k) {
+      if (k === 'core') return;
+      var isTriggered = !!activeNodeIds[k];
+      /* 地磚灰階控制 */
+      nodeG[k].classList.toggle('dim', !isTriggered);
+      nodeG[k].classList.toggle('untriggered', !isTriggered);
+      /* 浮動標籤按鈕未觸發灰階呈現，已觸發維持鮮明維度色彩 */
+      btns[k].classList.toggle('lbl-untriggered', !isTriggered);
+      btns[k].classList.toggle('btn-active-' + k, isTriggered);
+      btns[k].setAttribute('aria-pressed', String(isTriggered));
+    });
+
+    var pulses = activeLuts.map(function(lut, idx) {
+      return { lut: lut, c: el('circle', { 'class': 'pulse', r: 5 }, gPulse), ph: idx * 0.25 };
+    });
+    if (pulses.length) {
+      (function tick(now) {
+        pulses.forEach(function(p) {
+          var q = sampleLUT(p.lut, ((now / 1800) + p.ph) % 1);
+          p.c.setAttribute('cx', q.x);
+          p.c.setAttribute('cy', q.y);
+        });
+        rafId = requestAnimationFrame(tick);
+      })(performance.now());
+    }
+
+    var allRevealed = currentIdiom.dims.every(function(d) { return !quizMode || guessedDims[d.to]; });
+    renderPanel(allRevealed);
+  }
+
+  function renderPanel(allRevealed) {
+    panel.innerHTML = '';
+
+    var head = document.createElement('div');
+    head.className = 'panel-head';
+    var h2 = document.createElement('h2');
+    h2.innerHTML = currentIdiom.html;
+    var badge = document.createElement('span');
+    badge.className = 'quadrant-badge';
+    badge.textContent = allRevealed ? currentIdiom.quadrant : '❓ 猜題模式進行中（點選四維地磚解鎖）';
+    head.appendChild(h2);
+    head.appendChild(badge);
+    panel.appendChild(head);
+
+    var p = document.createElement('p');
+    p.className = 'desc-text';
+    p.textContent = allRevealed
+      ? currentIdiom.meaning
+      : '觀察成語字面與語意，點擊左側等距棋盤中的「時 / 亂 / 價 / 量」地磚，測試是否命中相關維度！';
+    panel.appendChild(p);
+
+    if (allRevealed) {
+      var dl = document.createElement('dl');
+      dl.className = 'kv-grid';
+      var rows = [
+        ['觸發字根', currentIdiom.roots],
+        ['關聯維度', currentIdiom.dims.map(function(d){ return byId[d.to].tag + ' ' + byId[d.to].label + ' (' + d.root + ')'; }).join(' ＋ ')]
+      ];
+      rows.forEach(function(r) {
+        var dt = document.createElement('dt'); dt.textContent = r[0];
+        var dd = document.createElement('dd'); dd.textContent = r[1];
+        dl.appendChild(dt); dl.appendChild(dd);
+      });
+      panel.appendChild(dl);
+    }
+
+    var chipWrap = document.createElement('div');
+    var chipTitle = document.createElement('div');
+    chipTitle.style.cssText = 'font-size:12px;color:var(--mute);font-weight:700;margin-bottom:6px;';
+    chipTitle.textContent = '成語題庫快速點選：';
+    chipWrap.appendChild(chipTitle);
+
+    var chipList = document.createElement('div');
+    chipList.className = 'chip-list';
+    getFilteredIdioms().forEach(function(item) {
+      var c = document.createElement('button');
+      c.type = 'button';
+      c.className = 'idiom-chip' + (item.id === currentIdiom.id ? ' active' : '');
+      c.textContent = item.raw;
+      c.addEventListener('click', function() {
+        selectIdiom(item);
+      });
+      chipList.appendChild(c);
+    });
+    chipWrap.appendChild(chipList);
+    panel.appendChild(chipWrap);
+  }
+
+  function getFilteredIdioms() {
+    var val = quadFilter.value;
+    if (val === 'all') return IDIOMS;
+    return IDIOMS.filter(function(i) { return i.group === val; });
+  }
+
+  function selectIdiom(item) {
+    currentIdiom = item;
+    guessedDims = {};
+    renderScene();
+  }
+
+  function pickRandomIdiom() {
+    var pool = getFilteredIdioms();
+    if (!pool.length) pool = IDIOMS;
+    var candidates = pool.filter(function(i) { return i.id !== currentIdiom.id; });
+    if (!candidates.length) candidates = pool;
+    var next = candidates[Math.floor(Math.random() * candidates.length)];
+    selectIdiom(next);
+  }
+
+  function onTileClick(id) {
+    if (id === 'core') {
+      pickRandomIdiom();
+      return;
+    }
+    if (quizMode) {
+      var hit = currentIdiom.dims.some(function(d) { return d.to === id; });
+      if (hit) {
+        guessedDims[id] = true;
+        renderScene();
+      } else {
+        quizHint.textContent = '❌ 「' + byId[id].label + '」非此成語關聯維度，再試試其他屬性！';
+      }
+      return;
+    }
+    var matching = IDIOMS.filter(function(item) {
+      return item.dims.some(function(d) { return d.to === id; }) && item.id !== currentIdiom.id;
+    });
+    if (matching.length) {
+      selectIdiom(matching[Math.floor(Math.random() * matching.length)]);
+    }
+  }
+
+  document.getElementById('randomBtn').addEventListener('click', pickRandomIdiom);
+  quadFilter.addEventListener('change', function() {
+    var pool = getFilteredIdioms();
+    if (pool.indexOf(currentIdiom) === -1 && pool.length) {
+      selectIdiom(pool[0]);
+    } else {
+      renderScene();
+    }
+  });
+  quizBtn.addEventListener('click', function() {
+    quizMode = !quizMode;
+    guessedDims = {};
+    quizBtn.setAttribute('aria-pressed', String(quizMode));
+    quizBtn.textContent = quizMode ? '🎯 猜題模式：開' : '🎯 猜題模式：關';
+    quizHint.style.display = quizMode ? 'block' : 'none';
+    quizHint.textContent = '請在下方棋盤點選此成語關聯的「價 / 量 / 亂 / 時」地磚！';
+    renderScene();
+  });
+  document.getElementById('themeBtn').addEventListener('click', function() {
+    var root = document.documentElement;
+    root.setAttribute('data-theme', root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.code === 'Space' && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'SELECT') {
+      e.preventDefault();
+      pickRandomIdiom();
+    }
+  });
+
+  renderScene();
+})();
+</script>
+</body>
+</html>

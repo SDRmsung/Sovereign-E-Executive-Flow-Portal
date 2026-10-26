@@ -1,0 +1,93 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>System 1 門禁 · Jev／Laya／Kev</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#14171c;--mute:#667085;--line:#d9dde3;--soft:#eef0f3;--ok:#12a150;--warn:#d97706;--bad:#dc2626;--acc:#2f6fed;--led:#0e9fb8;--dist:#9333ea}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1116;--card:#161a21;--ink:#e7e9ee;--mute:#8b93a1;--line:#2c323d;--soft:#1d222b;--ok:#34d27b;--warn:#f5a524;--bad:#f25555;--acc:#6b9bff;--led:#3cc8e0;--dist:#c084fc}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 system-ui,-apple-system,"Noto Sans TC",sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:16px}
+header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}h1{font-size:18px;margin:0}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 10px;font-size:13px;text-decoration:none}.btn:hover{border-color:var(--acc)}.back{background:var(--acc);color:#fff;border-color:var(--acc);font-weight:600;padding:8px 14px}.back:hover{filter:brightness(1.1)}
+.crumb{font-size:12.5px;color:var(--mute);margin-bottom:8px}.crumb a{color:var(--acc)}
+.pill{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--soft);color:var(--mute);border:1px solid var(--line)}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+h2{font-size:15px;margin:0 0 8px}h3{font-size:13.5px;margin:12px 0 4px}
+code,.f{font:12.5px/1.5 ui-monospace,Consolas,monospace}
+.f{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:8px 10px;overflow-x:auto;white-space:pre}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.m{border:1px solid var(--line);border-left:4px solid var(--c);border-radius:10px;padding:10px 12px;background:color-mix(in srgb,var(--c) 6%,var(--card))}
+.m b{color:var(--c)}.m ul{margin:6px 0 0;padding-left:18px}
+.kev{--c:var(--bad)}.jev{--c:var(--acc)}.laya{--c:var(--dist)}.bb{--c:var(--led)}
+.flow{display:grid;grid-template-columns:1fr;gap:6px}
+.lane{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.nd{border:1px solid var(--c);color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--card));border-radius:8px;padding:5px 9px;font-size:12.5px}
+.ar{color:var(--mute)}
+.bud{display:flex;height:26px;border-radius:8px;overflow:hidden;border:1px solid var(--line);font-size:11.5px;margin:6px 0}
+.bud span{display:flex;align-items:center;justify-content:center;color:#fff;white-space:nowrap;overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}th{color:var(--mute);font-weight:600}
+.warn{color:var(--warn)}.mute{color:var(--mute);font-size:12.5px}
+</style></head><body><div class="wrap">
+<div class="crumb"><a href="index.html">20 模板總覽</a> › <a href="23_knowledge_forest.html">23 知識森林雙塔看板</a> › System 1 門禁</div>
+<header><a class="btn back" href="23_knowledge_forest.html">← 回到知識森林雙塔看板</a><h1>⚡ System 1 門禁 · Jev／Laya／Kev</h1><span class="pill">0-Token Classifier &amp; Router</span><span class="pill">數字＝設計預算，未實測</span></header>
+
+<section><h2>定位：雙塔的「推論入口」</h2>
+<p>雙塔看板描述知識的<b>結構</b>（大樹＝晶格階層、大樓＝NCM 平行預鑄）。Jev／Laya／Kev 描述推論時<b>如何以最低延遲走進這個結構</b>：不生成任何文字，只輸出「拒絕／類別＋風險／該喚醒哪一層」。</p>
+<table><tr><th>門禁元件</th><th>對應雙塔錨點</th></tr>
+<tr><td>Kev 確定性預檢</td><td>大樓 B4 天台 · <code>00_L1_FailureMode</code> 已燒結死鎖特徵（黑名單來源）</td></tr>
+<tr><td>Jev 評估器</td><td>大樹 Tier 1 主權根柱（21 領域閘門）· OOD＝落在晶格本體論之外</td></tr>
+<tr><td>Laya 路由器</td><td>大樹 L1／L2／L3 階層 ↔ 大樓 B1 階層殘差碼本（K=256/512/1024）</td></tr>
+</table></section>
+
+<section><h2>執行拓撲（30ms 門禁）</h2>
+<div class="flow">
+<div class="lane"><span class="nd bb">Request</span><span class="ar">→ 並行分叉</span></div>
+<div class="lane"><span class="ar">CPU ┤</span><span class="nd kev">Kev 預檢</span><span class="ar">→ 命中黑名單／語法崩潰 →</span><span class="nd kev">取消信號 · 直接拒絕</span></div>
+<div class="lane"><span class="ar">GPU ┤</span><span class="nd bb">Shared Backbone（Shared Latent Rep）</span><span class="ar">→ Multi-Head →</span><span class="nd jev">Jev：意圖分類／風險評級</span><span class="nd laya">Laya：L1／L2／L3 遮罩</span></div>
+<div class="lane"><span class="ar">↓ 通過</span><span class="nd bb">S2 形式約束提取（Z3／CP-SAT）</span><span class="ar">→</span><span class="nd bb">中樞 Adapter 條件注入</span><span class="ar">→</span><span class="nd bb">NCM 平行預鑄</span></div>
+</div>
+<h3>延遲預算（目標值）</h3>
+<div class="bud"><span style="flex:2;background:var(--bad)">Kev &lt;2ms（CPU 並行）</span><span style="flex:28;background:var(--soft);color:var(--mute)">與 GPU 路徑重疊，不佔序列時間</span></div>
+<div class="bud"><span style="flex:15;background:var(--led)">Backbone &lt;15ms</span><span style="flex:5;background:var(--acc)">Jev+Laya 頭</span><span style="flex:10;background:var(--soft);color:var(--mute)">餘裕</span></div>
+<p class="mute">GPU 序列：特徵提取＋Jev＋Laya 目標 &lt;20ms；門禁總上限 30ms。全部為設計預算，需以 SG0 或實機 benchmark 驗證後才可改標「實測」。</p>
+</section>
+
+<section><h2>三元件算子級約束</h2>
+<div class="grid">
+<div class="m jev"><b>Jev</b> 淺層分類頭
+<div class="f">Jev = 共享池化投影 + 淺層 MLP 頭
+    + 0-Token Logits 定界 + OOD 拒止</div>
+<ul><li>禁止獨立深層 Transformer；只吃共享 pooled embedding，1～2 層線性投影。</li>
+<li>禁止呼叫 <code>lm_head</code>；只輸出類別 logits 與能量分數。</li>
+<li>能量分數超出晶格分佈 → 輸出拒止信號。</li></ul></div>
+<div class="m laya"><b>Laya</b> 稀疏門控路由
+<div class="f">Laya = TopK 稀疏門控 + L1~L3 階層遮罩
+     + 子圖指針分派 + 無狀態路由</div>
+<ul><li>MoE 式 router：一次內積算 Top-K，產生二元遮罩。</li>
+<li>遮罩決定喚醒哪一層碼本與 Adapter 殘差比例。</li>
+<li>不保存跨回合狀態，避免鎖競爭與延遲抖動。</li></ul></div>
+<div class="m kev"><b>Kev</b> CPU 確定性預檢
+<div class="f">Kev = CPU 非同步預檢 + Aho-Corasick/Regex
+    + Bloom→精確雜湊兩段確認 + 毫秒級熔斷</div>
+<ul><li>字串／規則匹配放 CPU，O(N) 線性掃描。</li>
+<li>Bloom 只當第一道篩：命中後查精確雜湊表確認，才熔斷。</li>
+<li>熔斷＝向推論 pipeline 發出取消信號（cancel token），不必等 GPU 算完。</li></ul></div>
+</div></section>
+
+<section><h2>用詞修正（相對原稿）</h2>
+<table><tr><th>原稿</th><th>修正</th><th>理由</th></tr>
+<tr><td>零幻覺特徵初篩</td><td>零生成（無生成式幻覺）</td><td>不生成文字可排除生成式幻覺，但分類器仍會誤判；誤判率需實測。</td></tr>
+<tr><td>微秒熔斷</td><td>毫秒級熔斷（預檢 &lt;2ms）</td><td>與 &lt;2ms 預檢預算量級一致。</td></tr>
+<tr><td>硬體中斷取消 Pipeline</td><td>取消信號（cancel token）</td><td>一般推論框架以任務取消實作，非硬體中斷。</td></tr>
+<tr><td>30ms／15ms／2ms</td><td>標示為「目標」</td><td>尚未有 benchmark 實測。</td></tr>
+</table></section>
+
+<section><h2>風險與對策</h2>
+<h3 class="warn">① 共享編碼器的隱性延遲</h3>
+<p>Jev、Laya 再輕，若 backbone 用 &gt;100M 參數的雙向 Transformer（大型 BERT／BGE），光特徵提取就 15～25ms。對策：限用 MiniLM-L6、Model2Vec 靜態向量或 INT8 量化（ONNX／TensorRT）編碼器。</p>
+<h3 class="warn">② Bloom 假陽性誤殺</h3>
+<p>Bloom 保證零假陰性，但假陽性率 <code>P_fp ≈ (1 − e^(−kn/m))^k</code> 會隨 <code>00_L1_FailureMode</code> 規則數 n 上升。對策：兩段確認（Bloom → Exact Hash Set），並隨 n 成長重算 m、k。</p>
+<h3 class="warn">③ OOD 門檻漂移</h3>
+<p>晶格新增領域或葉片後，能量分數分佈會位移；OOD 門檻需與晶格版本一起版控並重新校準。</p>
+</section>
+<p class="mute">來源：用戶提供的 Jev／Laya／Kev 算子級約束稿與執行拓撲圖（2026-10-26）。本頁為補充說明，不改動雙塔看板主圖。</p>
+<p style="text-align:center;margin:16px 0"><a class="btn back" href="23_knowledge_forest.html">← 回到知識森林雙塔看板（右側「⚡ System 1 門禁」卡片）</a></p>
+</div></body></html>

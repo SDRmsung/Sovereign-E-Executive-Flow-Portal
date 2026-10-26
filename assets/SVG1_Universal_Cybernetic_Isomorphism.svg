@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1080" width="100%" height="100%" style="background:#0d1117; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans TC',Helvetica,Arial,sans-serif;">
+  <defs>
+    <linearGradient id="grad-know" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f6feb" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#0d419d" stop-opacity="0.85"/>
+    </linearGradient>
+    <linearGradient id="grad-want" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#da3633" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#8e1519" stop-opacity="0.85"/>
+    </linearGradient>
+    <linearGradient id="grad-ctrl" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8957e5" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#5522b0" stop-opacity="0.85"/>
+    </linearGradient>
+    <linearGradient id="grad-act" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#238636" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#115822" stop-opacity="0.85"/>
+    </linearGradient>
+    <linearGradient id="grad-card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#161b22"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58a6ff" />
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f85149" />
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3fb950" />
+    </marker>
+  </defs>
+
+  <!-- Header -->
+  <rect x="40" y="25" width="1320" height="75" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+  <text x="700" y="58" fill="#f0f6fc" font-size="21" font-weight="bold" text-anchor="middle">SVG 1: 萬物控制論同構與最小因果閉環公理 (15 大元素 ✕ 五大引擎流水線工序)</text>
+  <text x="700" y="82" fill="#8b949e" font-size="12" text-anchor="middle">15 Elements: KNOW(K1-K3) → CONTROL(C1-C5+C6 LEDGER) ← WANT(W1-W3) ⟹ ACT(A1-A3) | Laya/Jev ➔ Intent Eng ➔ Kahn DAG ➔ Z3 ➔ OR-Tools</text>
+
+  <!-- Central Cybernetic Loop Diagram -->
+  <g transform="translate(50, 120)">
+    <rect x="0" y="0" width="1300" height="380" rx="12" fill="url(#grad-card)" stroke="#30363d" stroke-width="1.5"/>
+    <text x="30" y="35" fill="#58a6ff" font-size="16" font-weight="bold">🏛️ 一、 最小因果封閉系統核心動力學閉環 (Minimal Closed Dynamic Loop)</text>
+
+    <!-- 1. KNOW Block -->
+    <g transform="translate(80, 70)">
+      <rect x="0" y="0" width="250" height="120" rx="10" fill="url(#grad-know)" stroke="#58a6ff" stroke-width="2"/>
+      <text x="125" y="32" fill="#ffffff" font-size="17" font-weight="bold" text-anchor="middle">🧠 1. KNOW (知 / 世界模型)</text>
+      <text x="125" y="56" fill="#e6edf3" font-size="12" text-anchor="middle">餵什麼：感知輸入、內部狀態</text>
+      <text x="125" y="76" fill="#e6edf3" font-size="12" text-anchor="middle">單體必備，多智能體則分散下放</text>
+      <text x="125" y="100" fill="#79c0ff" font-size="12" font-weight="bold" text-anchor="middle">[K1 Context / K2 Memory / K3 RAG]</text>
+    </g>
+
+    <!-- 2. WANT Block -->
+    <g transform="translate(80, 230)">
+      <rect x="0" y="0" width="250" height="120" rx="10" fill="url(#grad-want)" stroke="#f85149" stroke-width="2"/>
+      <text x="125" y="30" fill="#ffffff" font-size="17" font-weight="bold" text-anchor="middle">🎯 2. WANT (欲 / 意志動機)</text>
+      <text x="125" y="52" fill="#e6edf3" font-size="12" text-anchor="middle">要什麼：W1 意圖契約化 (唯一本體)</text>
+      <text x="125" y="72" fill="#ffd600" font-size="11" font-weight="bold" text-anchor="middle">六族契約代碼：圖➔足➔割➔分➔裝➔跑</text>
+      <text x="125" y="94" fill="#e6edf3" font-size="11" text-anchor="middle">怎麼想：W2 Prompt / W3 Reasoning</text>
+      <text x="125" y="112" fill="#ff7b72" font-size="11" font-weight="bold" text-anchor="middle">[W1: Goal （Intent Contract） / W2 / W3]</text>
+    </g>
+
+    <!-- 3. CONTROL Block (Central Engine) -->
+    <g transform="translate(510, 100)">
+      <rect x="0" y="0" width="280" height="220" rx="12" fill="url(#grad-ctrl)" stroke="#bc8cff" stroke-width="2.5"/>
+      <text x="140" y="30" fill="#ffffff" font-size="18" font-weight="bold" text-anchor="middle">🛡️ 3. CONTROL (制 / 治理中樞)</text>
+      <line x1="20" y1="42" x2="260" y2="42" stroke="#d2a8ff" stroke-width="1" opacity="0.5"/>
+      <text x="140" y="62" fill="#f0f6fc" font-size="12" text-anchor="middle">怎麼管：C1-C5 + C6 LEDGER 帳本</text>
+      <text x="140" y="82" fill="#7ee787" font-size="11" font-weight="bold" text-anchor="middle">⚡ 五大引擎流水線工序：</text>
+      <text x="140" y="100" fill="#e6edf3" font-size="11" text-anchor="middle">Laya/Jev 快判 (30ms 分流/防越獄)</text>
+      <text x="140" y="118" fill="#e6edf3" font-size="11" text-anchor="middle">Intent Eng 提純 ➔ Kahn DAG 編排</text>
+      <text x="140" y="136" fill="#ffd600" font-size="11" font-weight="bold" text-anchor="middle">Z3 (合規/死鎖/門禁) ✕ OR-Tools (算術/排程)</text>
+      <text x="140" y="156" fill="#f0f6fc" font-size="11" text-anchor="middle">DecisionGateway 依信心升級 Reflection</text>
+      <rect x="15" y="172" width="250" height="38" rx="6" fill="#161b22"/>
+      <text x="140" y="196" fill="#ffd600" font-size="11" font-weight="bold" text-anchor="middle">C1-C5 + C6 LEDGER (對帳/追責/防重)</text>
+    </g>
+
+    <!-- 4. ACT Block -->
+    <g transform="translate(960, 150)">
+      <rect x="0" y="0" width="260" height="120" rx="10" fill="url(#grad-act)" stroke="#3fb950" stroke-width="2"/>
+      <text x="130" y="32" fill="#ffffff" font-size="17" font-weight="bold" text-anchor="middle">🦾 4. ACT (行 / 能力效應器)</text>
+      <text x="130" y="56" fill="#e6edf3" font-size="12" text-anchor="middle">能做什麼：Tool Use / ReAct 重度依賴</text>
+      <text x="130" y="76" fill="#8b949e" font-size="11" text-anchor="middle">Reflection / Planning 幾乎不碰</text>
+      <text x="130" y="102" fill="#7ee787" font-size="12" font-weight="bold" text-anchor="middle">[A1 Tools / A2 Skills / A3 Plugin]</text>
+    </g>
+
+    <!-- Arrows connecting the 4 pillars -->
+    <path d="M 330 130 Q 420 130 500 170" fill="none" stroke="#58a6ff" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="410" y="140" fill="#79c0ff" font-size="12" font-weight="bold">狀態反饋 St</text>
+
+    <path d="M 330 290 Q 420 290 500 240" fill="none" stroke="#f85149" stroke-width="3" marker-end="url(#arrow-red)"/>
+    <text x="410" y="280" fill="#ff7b72" font-size="12" font-weight="bold">目標理想態 S*</text>
+
+    <path d="M 790 210 L 950 210" fill="none" stroke="#bc8cff" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="870" y="198" fill="#d2a8ff" font-size="12" font-weight="bold" text-anchor="middle">策略指令 at</text>
+
+    <!-- Feedback loop to KNOW -->
+    <path d="M 1090 270 C 1090 350, 205 390, 205 200" fill="none" stroke="#3fb950" stroke-width="2.5" stroke-dasharray="6,4" marker-end="url(#arrow-green)"/>
+    <text x="650" y="365" fill="#7ee787" font-size="13" font-weight="bold" text-anchor="middle">物理環境擾動反饋 ➔ 形成感知閉環 (Closed-Loop Free Energy Minimization)</text>
+  </g>
+
+  <!-- Cross-Domain Isomorphism Table -->
+  <g transform="translate(50, 525)">
+    <rect x="0" y="0" width="1300" height="390" rx="12" fill="#161b22" stroke="#30363d" stroke-width="1.5"/>
+    <text x="30" y="35" fill="#d2a8ff" font-size="16" font-weight="bold">🔬 二、 跨領域自主實體之「全息同構表」與缺件自毀警示 (對齊 15 大元素與五大工序)</text>
+
+    <!-- Table Header -->
+    <rect x="25" y="55" width="1250" height="35" rx="6" fill="#21262d"/>
+    <text x="120" y="78" fill="#8b949e" font-size="13" font-weight="bold">實體領域 (Entity)</text>
+    <text x="340" y="78" fill="#79c0ff" font-size="13" font-weight="bold">🧠 KNOW (知 / 知識層)</text>
+    <text x="590" y="78" fill="#ff7b72" font-size="13" font-weight="bold">🎯 WANT (欲 / 意志層)</text>
+    <text x="850" y="78" fill="#d2a8ff" font-size="13" font-weight="bold">🛡️ CONTROL (制 / 控制層 + 帳本)</text>
+    <text x="1110" y="78" fill="#7ee787" font-size="13" font-weight="bold">🦾 ACT (行 / 能力層)</text>
+
+    <!-- Row 1: Single Cell -->
+    <text x="120" y="115" fill="#f0f6fc" font-size="12" font-weight="bold">🦠 單細胞生物 (草履蟲)</text>
+    <text x="340" y="115" fill="#c9d1d9" font-size="12">化學感受器 (溫度/pH/葡萄糖)</text>
+    <text x="590" y="115" fill="#c9d1d9" font-size="12">負熵穩態 (維持滲透壓/避毒)</text>
+    <text x="850" y="115" fill="#c9d1d9" font-size="12">細胞訊號傳遞與趨化轉向</text>
+    <text x="1110" y="115" fill="#c9d1d9" font-size="12">纖毛 / 偽足 (游向養分區)</text>
+    <line x1="25" y1="130" x2="1275" y2="130" stroke="#21262d" stroke-width="1"/>
+
+    <!-- Row 2: Human Brain -->
+    <text x="120" y="155" fill="#f0f6fc" font-size="12" font-weight="bold">🧑 人類大腦 (神經認知)</text>
+    <text x="340" y="155" fill="#c9d1d9" font-size="12">感官輸入與海馬迴情節記憶</text>
+    <text x="590" y="155" fill="#c9d1d9" font-size="12">慾望、多巴胺、價值觀 (JTBD)</text>
+    <text x="850" y="155" fill="#c9d1d9" font-size="12">前額葉皮質 (衝動抑制/超我)</text>
+    <text x="1110" y="155" fill="#c9d1d9" font-size="12">骨骼肌、發聲器官 (語言/動作)</text>
+    <line x1="25" y1="170" x2="1275" y2="170" stroke="#21262d" stroke-width="1"/>
+
+    <!-- Row 3: Tesla FSD -->
+    <text x="120" y="195" fill="#f0f6fc" font-size="12" font-weight="bold">🚗 自駕車 (Tesla FSD)</text>
+    <text x="340" y="195" fill="#c9d1d9" font-size="12">LiDAR/視覺神經網/高精地圖</text>
+    <text x="590" y="195" fill="#c9d1d9" font-size="12">導航終點與安全性 (碰撞率=0)</text>
+    <text x="850" y="195" fill="#c9d1d9" font-size="12">MPC/CBF 屏障演算法與避障</text>
+    <text x="1110" y="195" fill="#c9d1d9" font-size="12">轉向馬達/電子油門/線控煞車</text>
+    <line x1="25" y1="210" x2="1275" y2="210" stroke="#21262d" stroke-width="1"/>
+
+    <!-- Row 4: Missile -->
+    <text x="120" y="235" fill="#f0f6fc" font-size="12" font-weight="bold">🚀 巡弋飛彈 / 無人機</text>
+    <text x="340" y="235" fill="#c9d1d9" font-size="12">IMU 陀螺儀/GPS/尋標雷達</text>
+    <text x="590" y="235" fill="#c9d1d9" font-size="12">目標座標 (命中碉堡/航程限制)</text>
+    <text x="850" y="235" fill="#c9d1d9" font-size="12">卡爾曼濾波 / PID 姿態修正</text>
+    <text x="1110" y="235" fill="#c9d1d9" font-size="12">伺服舵機 / 推力向量噴嘴</text>
+    <line x1="25" y1="250" x2="1275" y2="250" stroke="#21262d" stroke-width="1"/>
+
+    <!-- Row 5: AI Agent -->
+    <rect x="25" y="255" width="1250" height="35" rx="4" fill="#1f242c" stroke="#388bfd" stroke-width="1"/>
+    <text x="120" y="278" fill="#58a6ff" font-size="12" font-weight="bold">🤖 AI 代理人 (15大元素)</text>
+    <text x="340" y="278" fill="#79c0ff" font-size="11" font-weight="bold">K1 Context / K2 Memory / K3 RAG</text>
+    <text x="590" y="278" fill="#ff7b72" font-size="11" font-weight="bold">W1: Goal （Intent Contract）/W2/W3</text>
+    <text x="850" y="278" fill="#d2a8ff" font-size="11" font-weight="bold">C1-C5+C6 LEDGER (Laya/Z3/OR-Tools)</text>
+    <text x="1110" y="278" fill="#7ee787" font-size="11" font-weight="bold">A1 Tools / A2 Skills / A3 Plugin</text>
+
+    <!-- Four Macro Breakdown Boxes -->
+    <g transform="translate(25, 305)">
+      <rect x="0" y="0" width="295" height="65" rx="8" fill="#21262d" stroke="#da3633" stroke-width="1.5"/>
+      <text x="15" y="25" fill="#ff7b72" font-size="13" font-weight="bold">❌ 缺 WANT (欲) ➔【死物】</text>
+      <text x="15" y="48" fill="#8b949e" font-size="11">如同石頭，無穩態需求任由風化消亡</text>
+
+      <rect x="315" y="0" width="295" height="65" rx="8" fill="#21262d" stroke="#1f6feb" stroke-width="1.5"/>
+      <text x="330" y="25" fill="#79c0ff" font-size="13" font-weight="bold">❌ 缺 KNOW (知) ➔【盲人】</text>
+      <text x="330" y="48" fill="#8b949e" font-size="11">看不見懸崖火源，邁出第一步即自毀</text>
+
+      <rect x="630" y="0" width="295" height="65" rx="8" fill="#21262d" stroke="#238636" stroke-width="1.5"/>
+      <text x="645" y="25" fill="#7ee787" font-size="13" font-weight="bold">❌ 缺 ACT (行) ➔【植物人】</text>
+      <text x="645" y="48" fill="#8b949e" font-size="11">感知危險且有求生欲，但無法物理干預</text>
+
+      <rect x="945" y="0" width="295" height="65" rx="8" fill="#21262d" stroke="#8957e5" stroke-width="1.5"/>
+      <text x="960" y="25" fill="#d2a8ff" font-size="13" font-weight="bold">❌ 缺 CONTROL (制) ➔【瘋子】</text>
+      <text x="960" y="48" fill="#8b949e" font-size="11">有目標有力氣但無煞車，瞬間震盪自毀</text>
+    </g>
+  </g>
+
+  <!-- Cross-Domain Validation Footer -->
+  <g transform="translate(50, 970)">
+    <rect x="0" y="0" width="1300" height="95" rx="10" fill="#161b22" stroke="#f778ba" stroke-width="2"/>
+    <text x="20" y="27" fill="#f778ba" font-size="15" font-weight="bold">🧬 跨案例佐證：VikingRAG Experience Edge 驗證同一閉環動力學</text>
+    <text x="20" y="50" fill="#c9d1d9" font-size="12">狀態反饋 St ↔ Experience Edge ε(v→u) 軌跡持久化；策略指令 at ↔ sim(Q',Q)≥γ 費洛蒙啟動；已在文件檢索領域實測：Token 省 67%-95%（arXiv:2609.11390）。</text>
+    <text x="20" y="73" fill="#8b949e" font-size="11">詳見：A03 02_Tech_VikingRAG核心原理與經驗邊架構規格.md §十 · A43 SKILL-STATE-Complete-Notes.md §7-8</text>
+  </g>
+</svg>
